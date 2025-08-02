@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>Admin - Stock & Orders 30 ปี CS</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 20px;
+      background: linear-gradient(135deg, #ffe0f0, #e0f7ff);
+      color: #5b3b74;
+      min-height: 100vh;
+    }
+    h1, h2 {
+      color: #6a4e9b;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 30px;
+      text-shadow: 0 1px 3px rgba(106, 78, 155, 0.3);
+    }
+    form {
+      max-width: 600px;
+      background: #fff;
+      padding: 25px 30px;
+      margin: 0 auto 40px auto;
+      border-radius: 20px;
+      box-shadow: 0 12px 28px rgba(166, 133, 245, 0.3);
+      border: 1px solid #d6b4ff;
+      transition: box-shadow 0.3s ease;
+    }
+    form:hover {
+      box-shadow: 0 18px 36px rgba(166, 133, 245, 0.5);
+    }
+    label {
+      font-weight: 600;
+      margin-top: 16px;
+      color: #7d5bbf;
+      display: block;
+    }
+    input, select {
+      width: 100%;
+      padding: 12px 14px;
+      margin-top: 8px;
+      font-size: 16px;
+      color: #5b3b74;
+      background: #faf6ff;
+      border: 2px solid #cbbaff;
+      border-radius: 12px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+    }
+    input:focus, select:focus {
+      border-color: #845ec2;
+      background-color: #fff;
+      outline: none;
+      box-shadow: 0 0 10px rgba(132, 94, 194, 0.4);
+    }
+    button {
+      margin-top: 26px;
+      padding: 15px;
+      width: 100%;
+      background: linear-gradient(90deg, #b58cf9, #a070db);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-weight: 700;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(160, 110, 240, 0.6);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #a070db, #7c46ac);
+      box-shadow: 0 8px 20px rgba(130, 70, 180, 0.8);
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      margin-top: 30px;
+      background: transparent;
+      font-size: 15px;
+      color: #5b3b74;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    thead tr {
+      background: #d8c6f5;
+      border-radius: 12px;
+      color: #4a3483;
+      font-weight: 700;
+      box-shadow: 0 2px 6px rgba(106, 78, 155, 0.2);
+    }
+    thead th {
+      padding: 14px 18px;
+      text-align: center;
+    }
+    tbody tr {
+      background: #faf6ff;
+      box-shadow: 0 3px 8px rgba(166, 133, 245, 0.15);
+      border-radius: 14px;
+      transition: background-color 0.25s ease;
+      cursor: default;
+    }
+    tbody tr:hover {
+      background-color: #e7d9ff;
+    }
+    tbody td {
+      padding: 14px 18px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    img {
+      max-width: 70px;
+      max-height: 50px;
+      border-radius: 10px;
+      border: 1.5px solid #d3b5ff;
+      object-fit: contain;
+    }
+    button.edit-btn, button.delete-btn {
+      border: none;
+      padding: 6px 14px;
+      margin: 0 6px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button.edit-btn {
+      background-color: #a070db;
+      color: white;
+      box-shadow: 0 2px 8px rgba(112, 84, 173, 0.7);
+    }
+    button.edit-btn:hover {
+      background-color: #7c46ac;
+      box-shadow: 0 4px 12px rgba(124, 70, 172, 0.9);
+    }
+    button.delete-btn {
+      background-color: #e56f78;
+      color: white;
+      box-shadow: 0 2px 8px rgba(229, 111, 120, 0.7);
+    }
+    button.delete-btn:hover {
+      background-color: #b8414a;
+      box-shadow: 0 4px 12px rgba(184, 65, 74, 0.9);
+    }
+    .back-link {
+      text-align: center;
+      margin-top: 40px;
+    }
+    .back-link a {
+      color: #7d5bbf;
+      text-decoration: underline;
+      font-weight: 700;
+      font-size: 16px;
+      transition: color 0.3s ease;
+    }
+    .back-link a:hover {
+      color: #4a3483;
+    }
+    /* Scroll for tables on small screens */
+    @media (max-width: 900px) {
+      table, thead, tbody, th, td, tr {
+        display: block;
+      }
+      thead tr {
+        display: none;
+      }
+      tbody tr {
+        margin-bottom: 18px;
+        background: #faf6ff;
+        border-radius: 16px;
+        box-shadow: 0 2px 10px rgba(166, 133, 245, 0.2);
+      }
+      tbody td {
+        padding-left: 50%;
+        text-align: left;
+        position: relative;
+      }
+      tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 14px;
+        top: 14px;
+        font-weight: 700;
+        color: #7d5bbf;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Admin - จัดการ Stock & Order สั่งซื้อ</h1>
+
+  <h2>เพิ่ม / แก้ไข สินค้า</h2>
+  <form id="productForm">
+    <input type="hidden" id="editIndex" value="-1" />
+    <label>ชื่อสินค้า</label>
+    <select id="productName" required>
+      <option value="">-- เลือกสินค้า --</option>
+      <option>เสื้อโปโล</option><option>กระเป๋า</option><option>แก้ว</option><option>หมวก</option>
+      <option>ร่ม</option><option>เข็มกลัด</option><option>สมุด</option><option>ปากกา</option>
+    </select>
+    <label>สี</label><input type="text" id="color" placeholder="เช่น ขาว, กรม" />
+    <label>ขนาด</label><input type="text" id="size" placeholder="เช่น S, M, L" />
+    <label>ราคา</label><input type="number" id="price" min="0" required />
+    <label>Stock</label><input type="number" id="stock" min="0" required />
+    <label>URL รูปภาพ</label><input type="text" id="imageUrl" placeholder="วาง URL รูปภาพ" />
+    <button type="submit">บันทึกสินค้า</button>
+  </form>
+
+  <h2>รายการสินค้า</h2>
+  <table>
+    <thead>
+      <tr><th>ลำดับ</th><th>สินค้า</th><th>สี</th><th>ขนาด</th><th>ราคา (บาท)</th><th>รูปภาพ</th><th>Stock</th><th>จัดการ</th></tr>
+    </thead>
+    <tbody id="productTableBody"></tbody>
+  </table>
+
+  <h2>คำสั่งซื้อจากลูกค้า</h2>
+  <table>
+    <thead>
+      <tr><th>ลำดับ</th><th>ชื่อ‑นามสกุล</th><th>โทร</th><th>ที่อยู่</th><th>สินค้า</th><th>จัดส่ง</th><th>ช่องทางจ่าย</th><th>วันที่</th></tr>
+    </thead>
+    <tbody id="orderTableBody"></tbody>
+  </table>
+
+  <div class="back-link">
+    <a href="index.html">← กลับไปหน้าลูกค้า (สั่งซื้อสินค้า)</a>
+  </div>
+
+  <script>
+    let products = JSON.parse(localStorage.getItem('products') || '[]');
+    let orders = JSON.parse(localStorage.getItem('orders') || '[]');
+
+    const productTableBody = document.getElementById('productTableBody');
+    const form = document.getElementById('productForm');
+
+    function renderProducts() {
+      productTableBody.innerHTML = '';
+      products.forEach((p, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td data-label="ลำดับ">${i + 1}</td>
+          <td data-label="สินค้า">${p.productName}</td>
+          <td data-label="สี">${p.color || '-'}</td>
+          <td data-label="ขนาด">${p.size || '-'}</td>
+          <td data-label="ราคา">${p.price.toLocaleString('th-TH', { style: 'currency', currency: 'THB' })}</td>
+          <td data-label="รูปภาพ">${p.imageUrl ? `<img src="${p.imageUrl}" alt="รูปสินค้า">` : '-'}</td>
+          <td data-label="Stock">${p.stock}</td>
+          <td data-label="จัดการ">
+            <button class="edit-btn" onclick="editProduct(${i})">แก้ไข</button>
+            <button class="delete-btn" onclick="deleteProduct(${i})">ลบ</button>
+          </td>`;
+        productTableBody.appendChild(tr);
+      });
+    }
+    function editProduct(i) {
+      const p = products[i];
+      document.getElementById('editIndex').value = i;
+      document.getElementById('productName').value = p.productName;
+      document.getElementById('color').value = p.color;
+      document.getElementById('size').value = p.size;
+      document.getElementById('price').value = p.price;
+      document.getElementById('stock').value = p.stock;
+      document.getElementById('imageUrl').value = p.imageUrl;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function deleteProduct(i) {
+      if (confirm('ลบสินค้านี้?')) {
+        products.splice(i, 1);
+        saveProducts();
+      }
+    }
+    function saveProducts() {
+      localStorage.setItem('products', JSON.stringify(products));
+      renderProducts();
+      form.reset();
+      document.getElementById('editIndex').value = -1;
+    }
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const idx = parseInt(document.getElementById('editIndex').value);
+      const newP = {
+        productName: document.getElementById('productName').value,
+        color: document.getElementById('color').value.trim(),
+        size: document.getElementById('size').value.trim(),
+        price: parseFloat(document.getElementById('price').value),
+        stock: parseInt(document.getElementById('stock').value),
+        imageUrl: document.getElementById('imageUrl').value.trim()
+      };
+      if (idx >= 0) products[idx] = newP; else products.push(newP);
+      saveProducts();
+    });
+    renderProducts();
+
+    const orderTableBody = document.getElementById('orderTableBody');
+    function renderOrders() {
+      orderTableBody.innerHTML = '';
+      orders.forEach((o, i) => {
+        const listItems = o.products.map(p => `${p.product} x${p.quantity}`).join(', ');
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td data-label="ลำดับ">${i + 1}</td>
+          <td data-label="ชื่อ-นามสกุล">${o.firstname} ${o.lastname}</td>
+          <td data-label="โทร">${o.phone}</td>
+          <td data-label="ที่อยู่">${o.address}</td>
+          <td data-label="สินค้า">${listItems}</td>
+          <td data-label="จัดส่ง">${o.deliveryOption}</td>
+          <td data-label="ช่องทางจ่าย">${o.paymentMethod}</td>
+          <td data-label="วันที่">${o.orderDate}</td>`;
+        orderTableBody.appendChild(tr);
+      });
+    }
+    renderOrders();
+
+    window.addEventListener('storage', e => {
+      if (e.key === 'orders') {
+        orders = JSON.parse(e.newValue || '[]');
+        renderOrders();
+      }
+    });
+  </script>
+
+</body>
+</html>
